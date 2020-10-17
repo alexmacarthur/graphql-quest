@@ -6,27 +6,46 @@
       import Quest from "./dist/quest.es.min.js";
 
       const quest = Quest({
-        endpoint: "http://localhost:4000/graphql"
+        endpoint: "http://localhost:4000/graphql",
+        headers: {
+          "x-api-key": "could-be-anything"
+        }
       });
 
-      const query = `
-        {
-          comments(domain: "macarthur.me") {
-              createdAt
-              name
-              emailAddress
-              content
-              path
-              id
+      const variablesQuery = `
+        query Comments($domain: String!) {
+          comments(domain: $domain) {
+            createdAt
+            name
+            emailAddress
+            content
+            path
+            id
           }
         }
       `;
 
-      quest.send(query, {
-        headers: {
-          "x-api-key": "could-be-anything"
-        }
+      // include variables via object
+      quest.send(variablesQuery, {
+        domain: "macarthur.me"
       }).then((result) => {
+        console.log(result);
+      });
+
+      const simpleQuery = `
+        {
+          comments(domain: "macarthur.me") {
+            createdAt
+            name
+            emailAddress
+            content
+            path
+            id
+          }
+        }
+      `
+      // send a plain-text query
+      quest.send(simpleQuery).then((result) => {
         console.log(result);
       });
     </script>

@@ -1,51 +1,42 @@
-interface QueryPayload {
-  data: object;
-  errors: any[];
-  isSuccessful: boolean;
+interface QueryResponse {
+  data?: object;
+  errors?: any[];
 }
 
 interface QuestConfig {
   endpoint: string;
-}
-
-interface QueryConfig {
-  method: string;
   headers: object;
+  method: string;
 }
 
 function Quest(config: QuestConfig) {
-  const { endpoint } = config;
+  const { endpoint, method = "POST", headers = {} } = config;
 
   const send = async (
     query: string,
-    queryConfig: QueryConfig = { headers: {}, method: "" }
-  ): Promise<QueryPayload> => {
-    const { method, headers } = queryConfig;
-    const returnPayload: QueryPayload = {
-      data: {},
-      errors: [],
-      isSuccessful: false,
-    };
-
+    variables: object = {}
+  ): Promise<QueryResponse> => {
     try {
       const response = await fetch(endpoint, {
-        method: method || "POST",
+        method,
         headers: {
           ...{ "Content-Type": "application/json" },
           ...headers,
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, variables }),
       });
 
-      Object.assign(returnPayload, await response.json());
+      const { data, errors } = await response.json();
+      const returnPayload: QueryResponse = { data };
 
-      returnPayload.isSuccessful = response.ok;
+      if (errors) {
+        returnPayload.errors = errors;
+      }
+
+      return returnPayload;
     } catch (e) {
-      returnPayload.errors.push(e);
-      returnPayload.isSuccessful = false;
+      return { errors: [e] };
     }
-
-    return returnPayload;
   };
 
   return { send };

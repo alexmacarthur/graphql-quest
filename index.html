@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <script type="module">
+      import Quest from "./dist/quest.es.min.js";
+
+      const quest = Quest({
+        endpoint: "http://localhost:4000/graphql"
+      });
+
+      const query = `
+        {
+          comments(domain: "macarthur.me") {
+              createdAt
+              name
+              emailAddress
+              content
+              path
+              id
+          }
+        }
+      `;
+
+      quest.send(query, {
+        headers: {
+          "x-api-key": "could-be-anything"
+        }
+      }).then((result) => {
+        console.log(result);
+      });
+    </script>
+  </body>
+</html>

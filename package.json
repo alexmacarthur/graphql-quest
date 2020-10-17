@@ -1,0 +1,35 @@
+{
+  "name": "graphql-quest",
+  "version": "0.1.0",
+  "description": "Ultra-minimal client-side library for making GraphQL requests.",
+  "main": "dist/quest.min.js",
+  "module": "dist/quest.es.min.js",
+  "author": "Alex MacArthur <alex@macarthur.me> (https://macarthur.me)",
+  "homepage": "https://github.com/alexmacarthur/graphql-quest",
+  "scripts": {
+    "start": "serve",
+    "build": "NODE_ENV=production rollup -c",
+    "watch": "NODE_ENV=development rollup -c -w",
+    "prettify": "prettier src/**/*.ts --write",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "keywords": [
+    "graphql",
+    "request",
+    "gql"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^6.0.0",
+    "prettier": "^2.1.2",
+    "rollup": "^2.32.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "serve": "^11.3.2",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.3"
+  }
+}

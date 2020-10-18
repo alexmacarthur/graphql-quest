@@ -6,6 +6,16 @@ A minimal library for making GraphQL requests in JavaScript, coming in at < 600 
 
 I needed an ultra-light, minimally-scoped client for talking to a GraphQL API. Prisma's [graphql-request](https://github.com/prisma-labs/graphql-request) has the feature set I needed, and is pretty small in size, but I wanted to go even thinner. For _most_ use cases, Quest has an extremely similar feature set with a gzipped size that's ~9.5 times smaller than Prisma's alternative.
 
+## Installation
+
+### Package Manager
+
+`npm install graphql-quest` or `yarn add graphql-quest`
+
+### CDN
+
+[Grab the link](https://www.jsdelivr.com/package/npm/graphql-quest) for the latest version and load it via `<script>` tag.
+
 ## Simplest Usage
 
 Quest provides a simple function for sending of quick queries.

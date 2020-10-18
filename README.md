@@ -1,10 +1,10 @@
 # Quest
 
-A minimal library for making GraphQL requests in JavaScript, coming in at < 600 bytes gzipped.
+A minimal library for making GraphQL requests in JavaScript, coming in at [< 600 bytes gzipped](https://bundlephobia.com/result?p=graphql-quest).
 
 ## Why?
 
-I needed an ultra-light, minimally-scoped client for talking to a GraphQL API. Prisma's [graphql-request](https://github.com/prisma-labs/graphql-request) has the feature set I needed, and is pretty small in size, but I wanted to go even thinner. For _most_ use cases, Quest has an extremely similar feature set with a gzipped size that's ~9.5 times smaller than Prisma's alternative.
+I needed an ultra-light, minimally-scoped client for talking to a GraphQL API. Prisma's [graphql-request](https://github.com/prisma-labs/graphql-request) has the feature set I needed, and it's pretty small in size, but I wanted to go even thinner. For _most_ use cases, Quest has an extremely similar feature set with a gzipped size that's ~9.5 times smaller than Prisma's alternative.
 
 ## Installation
 
@@ -18,7 +18,7 @@ I needed an ultra-light, minimally-scoped client for talking to a GraphQL API. P
 
 ## Simplest Usage
 
-Quest provides a simple function for sending of quick queries.
+Quest provides a simple function for sending quick queries and doing something with the [returned payload](#returned-payload).
 
 ```js
 import { quest } from "graphql-quest";
@@ -35,10 +35,16 @@ const query = `
 
 quest("http://some-domain.com/graphql", query).then((result) => {
   console.log(result);
+
+  // result will be formed as such:
+  // {
+  //   data?: {},
+  //   errors?: []
+  // }
 });
 ```
 
-You can also provide a variables object to be used with a respective query or mutation.
+You can also provide a `variables` object to be used with a respective query or mutation.
 
 ```js
 import { quest } from "graphql-quest";
@@ -64,7 +70,7 @@ quest("http://some-domain.com/graphql", query, variables).then((result) => {
 
 ## More Complicated Usage
 
-If you're going to be making repeated requests to the same server, you can preserve your endpoint, headers, etc. by creating a `QuestClient` instance.
+If you're going to be making repeated requests to the same server, you can preserve your endpoint, headers, etc. by creating a `QuestClient` instance and making queries with `.send()`.
 
 ```js
 import { QuestClient } from "graphql-quest";
@@ -97,7 +103,7 @@ client.send(query, variables).then((result) => {
 
 ## Returned Payload
 
-Every request (even those that throw exceptions) will return an object containing `data`, `errors`, or both. This pattern is generally intended to stay inline with the [GraphQL specification](https://graphql.org/learn/serving-over-http/#response), but doesn't require that you `.catch()` any errors on your own. Instead, exceptions that are thrown are simply represented in the `errors` array.
+Every request (even those that throw exceptions) will return an object containing `data`, `errors`, or both. This pattern is generally intended to stay in line with the [GraphQL specification](https://graphql.org/learn/serving-over-http/#response), but doesn't require that you `.catch()` any errors on your own. Instead, exceptions that are thrown are represented in the `errors` array.
 
 ```ts
 {
@@ -106,7 +112,7 @@ Every request (even those that throw exceptions) will return an object containin
 }
 ```
 
-So, checking the success of the request can be basically performed by checking if the `errors` property exists on the return payload:
+So, checking the success of the request can be basically performed by checking if the `errors` property exists on the returned payload:
 
 ```js
 import { quest } from "grahpql-quest";
@@ -129,7 +135,7 @@ import { quest } from "grahpql-quest";
 
 ## POST vs. GET
 
-By default, requests are sent via `POST`, and the query & variables are sent along with the request body. If you'd like to send them via `GET`, set the `method` parameter accordingly. Instead, the query and variables will be parsed and attached as query string parameters to the endpoint, preserving any parameters that might already be attached.
+By default, requests are sent via `POST`, and the query & variables are sent along with the request body. If you'd like to send them via `GET`, set the `method` parameter accordingly. Instead, the query and variables will be parsed and attached as query string parameters to the endpoint, preserving any parameters that might already be set on the URL.
 
 ```js
 import { quest, QuestClient } from "graphql-quest";

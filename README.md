@@ -1,6 +1,10 @@
 # Quest
 
-A minimal library for making GraphQL requests in JavaScript, coming in at < 900 bytes.
+A minimal library for making GraphQL requests in JavaScript, coming in at < 600 bytes gzipped.
+
+## Why?
+
+I needed an ultra-light, minimally-scoped client for talking to a GraphQL API. Prisma's [graphql-request](https://github.com/prisma-labs/graphql-request) has the feature set I needed, and is pretty small in size, but I wanted to go even thinner. For _most_ use cases, Quest has an extremely similar feature set with a gzipped size that's ~9.5 times smaller than Prisma's alternative.
 
 ## Simplest Usage
 

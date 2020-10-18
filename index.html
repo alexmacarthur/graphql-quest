@@ -10,11 +10,33 @@
         headers: {
           "x-api-key": "some-api-key",
         },
+        method: "GET",
       });
 
       const query = `
-              query Comments($domain: String!) {
-                comments(domain: $domain) {
+                    query Comments($domain: String!) {
+                      comments(domain: $domain) {
+                        createdAt
+                        name
+                        emailAddress
+                        content
+                        path
+                        id
+                      }
+                    }
+                  `;
+
+      const variables = {
+        domain: "macarthur.me",
+      };
+
+      client.send(query, variables).then((result) => {
+        console.log(result);
+      });
+
+      const variablelessQuery = `
+              {
+                comments(domain: "macarthur.me") {
                   createdAt
                   name
                   emailAddress
@@ -25,15 +47,14 @@
               }
             `;
 
-      const variables = {
-        domain: "macarthur.me",
-      };
-
-      client.send(query, variables).then((result) => {
-        console.log(result);
-      });
-
-      quest("http://localhost:4000/graphql", query, variables).then((result) => {
+      quest(
+        "http://localhost:4000/graphql",
+        variablelessQuery,
+        {},
+        {
+          method: "GET",
+        }
+      ).then((result) => {
         console.log(result);
       });
     </script>

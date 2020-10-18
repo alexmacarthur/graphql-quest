@@ -1,6 +1,6 @@
 {
   "name": "graphql-quest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ultra-minimal library for making GraphQL requests.",
   "main": "dist/quest.js",
   "module": "dist/quest.es.js",
@@ -10,11 +10,11 @@
     "start": "serve",
     "build": "NODE_ENV=production rollup -c",
     "watch": "NODE_ENV=development rollup -c -w",
-    "prettify": "prettier src/**/*.ts --write",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettify": "prettier \"./**/*.{ts,js,md}\" --write",
+    "test": "jest"
   },
   "files": [
-    "src",
+  "src",
     "dist"
   ],
   "keywords": [
@@ -24,7 +24,12 @@
   ],
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
     "@rollup/plugin-typescript": "^6.0.0",
+    "babel-jest": "^26.5.2",
+    "jest": "^26.5.3",
     "prettier": "^2.1.2",
     "rollup": "^2.32.0",
     "rollup-plugin-terser": "^7.0.2",

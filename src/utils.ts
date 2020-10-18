@@ -1,15 +1,9 @@
 import { FetchOptions, SomeObject, QueryResponse } from "./interfaces";
 
-export function isEmpty(obj: SomeObject): boolean {
-  return Object.keys(obj).length === 0;
-}
-
 export function attachParamsToUrl(url: string, params: SomeObject): string {
   const urlObj = new URL(url);
 
   for (const key in params) {
-    if (isEmpty(params[key])) continue;
-
     urlObj.searchParams.append(key, params[key]);
   }
 
@@ -27,16 +21,16 @@ export async function makeRequest({
   query: string;
   variables: SomeObject;
 }): Promise<QueryResponse> {
-  const payload = { query, variables };
+  const payload = { query, variables: JSON.stringify(variables) };
   const { method = "POST", headers = {} } = fetchOptions;
-  const isGet = method === "GET";
+  const isGet = method.toLowerCase() === "get";
   const preparedEndpoint = isGet
     ? attachParamsToUrl(endpoint, payload)
     : endpoint;
 
   try {
     const response = await fetch(preparedEndpoint, {
-      method,
+      method: method.toUpperCase(),
       headers: {
         ...{
           "Content-Type": `application/${

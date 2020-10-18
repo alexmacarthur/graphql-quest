@@ -1,45 +1,43 @@
-interface QueryResponse {
-  data?: object;
-  errors?: any[];
+import {
+  FetchOptions,
+  QueryResponse,
+  QuestConfig,
+  SomeObject,
+} from "./interfaces";
+
+import { makeRequest } from "./utils";
+
+export async function quest(
+  endpoint: string,
+  query: string,
+  variables: SomeObject = {},
+  fetchOptions: FetchOptions = {}
+) {
+  return await makeRequest({
+    endpoint,
+    query,
+    variables,
+    fetchOptions,
+  });
 }
 
-interface QuestConfig {
-  endpoint: string;
-  headers: object;
-  method: string;
-}
-
-function Quest(config: QuestConfig) {
-  const { endpoint, method = "POST", headers = {} } = config;
+export function QuestClient(config: QuestConfig) {
+  const { endpoint, method, headers } = config;
 
   const send = async (
     query: string,
-    variables: object = {}
+    variables: SomeObject = {}
   ): Promise<QueryResponse> => {
-    try {
-      const response = await fetch(endpoint, {
+    return await makeRequest({
+      endpoint,
+      query,
+      variables,
+      fetchOptions: {
         method,
-        headers: {
-          ...{ "Content-Type": "application/json" },
-          ...headers,
-        },
-        body: JSON.stringify({ query, variables }),
-      });
-
-      const { data, errors } = await response.json();
-      const returnPayload: QueryResponse = { data };
-
-      if (errors) {
-        returnPayload.errors = errors;
-      }
-
-      return returnPayload;
-    } catch (e) {
-      return { errors: [e] };
-    }
+        headers,
+      },
+    });
   };
 
   return { send };
 }
-
-export default Quest;

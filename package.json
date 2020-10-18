@@ -1,9 +1,9 @@
 {
   "name": "graphql-quest",
-  "version": "0.1.0",
-  "description": "Ultra-minimal client-side library for making GraphQL requests.",
-  "main": "dist/quest.min.js",
-  "module": "dist/quest.es.min.js",
+  "version": "1.0.0",
+  "description": "Ultra-minimal library for making GraphQL requests.",
+  "main": "dist/quest.js",
+  "module": "dist/quest.es.js",
   "author": "Alex MacArthur <alex@macarthur.me> (https://macarthur.me)",
   "homepage": "https://github.com/alexmacarthur/graphql-quest",
   "scripts": {

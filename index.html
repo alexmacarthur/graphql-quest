@@ -3,34 +3,34 @@
   <head></head>
   <body>
     <script type="module">
-      import Quest from "./dist/quest.es.min.js";
+      import { quest } from "./dist/quest.js";
 
-      const quest = Quest({
+      const client = QuestClient({
         endpoint: "http://localhost:4000/graphql",
         headers: {
-          "x-api-key": "could-be-anything"
+          "x-api-key": "AGMP1TM-ZKC4XWX-J13XW4P-4NNS4R2"
         }
       });
 
-      const variablesQuery = `
-        query Comments($domain: String!) {
-          comments(domain: $domain) {
-            createdAt
-            name
-            emailAddress
-            content
-            path
-            id
-          }
-        }
-      `;
+      // const variablesQuery = `
+      //   query Comments($domain: String!) {
+      //     comments(domain: $domain) {
+      //       createdAt
+      //       name
+      //       emailAddress
+      //       content
+      //       path
+      //       id
+      //     }
+      //   }
+      // `;
 
       // include variables via object
-      quest.send(variablesQuery, {
-        domain: "macarthur.me"
-      }).then((result) => {
-        console.log(result);
-      });
+      // quest.send(variablesQuery, {
+      //   domain: "macarthur.me"
+      // }).then((result) => {
+      //   console.log(result);
+      // });
 
       const simpleQuery = `
         {
@@ -44,10 +44,16 @@
           }
         }
       `
+
       // send a plain-text query
-      quest.send(simpleQuery).then((result) => {
+      client.send(simpleQuery).then((result) => {
         console.log(result);
       });
+
+      // quest("http://localhost:4000/graphql", simpleQuery, {}).then(data => {
+      //   console.log(data);
+      // });
+
     </script>
   </body>
 </html>

@@ -3,57 +3,39 @@
   <head></head>
   <body>
     <script type="module">
-      import { quest } from "./dist/quest.js";
+      import { quest, QuestClient } from "./dist/quest.es.js";
 
       const client = QuestClient({
         endpoint: "http://localhost:4000/graphql",
         headers: {
-          "x-api-key": "AGMP1TM-ZKC4XWX-J13XW4P-4NNS4R2"
-        }
+          "x-api-key": "some-api-key",
+        },
       });
 
-      // const variablesQuery = `
-      //   query Comments($domain: String!) {
-      //     comments(domain: $domain) {
-      //       createdAt
-      //       name
-      //       emailAddress
-      //       content
-      //       path
-      //       id
-      //     }
-      //   }
-      // `;
+      const query = `
+              query Comments($domain: String!) {
+                comments(domain: $domain) {
+                  createdAt
+                  name
+                  emailAddress
+                  content
+                  path
+                  id
+                }
+              }
+            `;
 
-      // include variables via object
-      // quest.send(variablesQuery, {
-      //   domain: "macarthur.me"
-      // }).then((result) => {
-      //   console.log(result);
-      // });
+      const variables = {
+        domain: "macarthur.me",
+      };
 
-      const simpleQuery = `
-        {
-          comments(domain: "macarthur.me") {
-            createdAt
-            name
-            emailAddress
-            content
-            path
-            id
-          }
-        }
-      `
-
-      // send a plain-text query
-      client.send(simpleQuery).then((result) => {
+      client.send(query, variables).then((result) => {
         console.log(result);
       });
 
-      // quest("http://localhost:4000/graphql", simpleQuery, {}).then(data => {
-      //   console.log(data);
-      // });
-
+      quest("http://localhost:4000/graphql", query, variables).then((result) => {
+        console.log(result);
+      });
     </script>
   </body>
 </html>

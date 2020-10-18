@@ -148,12 +148,12 @@ const { quest } = require("graphql-quest");
 
 ## Usage w/o a Bundler
 
-If not using the ESModule, you can access `quest` or `QuestClient` on the global `Quest` object after loading the source in the browser.
+If not using the ES module, you can access `quest` or `QuestClient` on the global `Quest` object after loading the source in the browser.
 
 ```html
 <script src="./dist/quest.js"></script>
 <script>
-  const { quest, QuestClient } = Quest;
+  const { quest, QuestClient } = window.Quest;
 
   // ... the rest of your code.
 </script>
@@ -161,11 +161,36 @@ If not using the ESModule, you can access `quest` or `QuestClient` on the global
 
 ## Options
 
-### `quest(endpoint: string, query: string, variables: object, fetchOptions: object)`
+```ts
+quest(
+  endpoint: string,
+  query: string,
+  variables?: object,
+  fetchOptions?: object
+);
+```
 
-| Option       | Required? | Description                                                                                                                 |
-| ------------ | --------- | --------------------------------------------------------------------------------------------------------------------------- |
-| endpoint     | yes       | the endpoint that'll be hit for the request                                                                                 |
-| query        | yes       | the query or mutation you're firing                                                                                         |
-| variables    | no        | variables to be supplied to your query or mutation                                                                          |
-| fetchOptions | no        | additional options to be passed into the `fetch` implementation under the hood (currently only supports headers and method) |
+| Option       | Description                                                                                                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| endpoint     | the endpoint that'll be hit for the request                                                                                 |
+| query        | the query or mutation you're firing                                                                                         |
+| variables    | variables to be supplied to your query or mutation                                                                          |
+| fetchOptions | additional options to be passed into the `fetch` implementation under the hood (currently only supports headers and method) |
+
+```ts
+QuestClient({
+  endpoint,
+  method,
+  headers,
+} : {
+  endpoint: string,
+  method?: string,
+  headers?: object
+})
+```
+
+| Option   | Description                                         |
+| -------- | --------------------------------------------------- |
+| endpoint | the endpoint that'll be hit for the request         |
+| method   | HTTP method for sending request (default is `POST`) |
+| headers  | headers to include in request                       |

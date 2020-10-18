@@ -21,9 +21,7 @@ export async function quest(
   });
 }
 
-export function QuestClient(config: QuestConfig) {
-  const { endpoint, method, headers } = config;
-
+export function QuestClient({ endpoint, method, headers} : QuestConfig) {
   const send = async (
     query: string,
     variables: SomeObject = {}

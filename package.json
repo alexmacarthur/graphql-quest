@@ -1,6 +1,6 @@
 {
   "name": "graphql-quest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ultra-minimal library for making GraphQL requests.",
   "main": "dist/quest.js",
   "module": "dist/quest.es.js",
@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "files": [
-  "src",
+    "src",
     "dist"
   ],
   "keywords": [

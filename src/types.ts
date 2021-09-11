@@ -1,17 +1,19 @@
+export interface SomeObject {
+  [key: string]: any;
+}
+
 export interface QueryResponse {
-  data?: object;
+  data?: SomeObject;
   errors?: any[];
 }
 
 export interface FetchOptions {
-  headers?: object;
+  headers?: {
+    [key: string]: string;
+  };
   method?: string;
 }
 
 export interface QuestConfig extends FetchOptions {
   endpoint: string;
-}
-
-export interface SomeObject {
-  [key: string]: any;
 }

@@ -1,4 +1,4 @@
-import { FetchOptions, SomeObject, QueryResponse } from "./interfaces";
+import { FetchOptions, SomeObject, QueryResponse } from "./types";
 
 export function attachParamsToUrl(url: string, params: SomeObject): string {
   const urlObj = new URL(url);
@@ -23,7 +23,7 @@ export async function makeRequest({
 }): Promise<QueryResponse> {
   const payload = { query, variables: JSON.stringify(variables) };
   const { method = "POST", headers = {} } = fetchOptions;
-  const isGet = method.toLowerCase() === "get";
+  const isGet = /get/i.test(method);
   const preparedEndpoint = isGet
     ? attachParamsToUrl(endpoint, payload)
     : endpoint;
@@ -32,11 +32,9 @@ export async function makeRequest({
     const response = await fetch(preparedEndpoint, {
       method: method.toUpperCase(),
       headers: {
-        ...{
-          "Content-Type": `application/${
-            isGet ? "x-www-form-urlencoded" : "json"
-          }`,
-        },
+        "Content-Type": `application/${
+          isGet ? "x-www-form-urlencoded" : "json"
+        }`,
         ...headers,
       },
       body: isGet ? null : JSON.stringify(payload),

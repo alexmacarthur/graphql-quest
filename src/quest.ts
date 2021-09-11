@@ -1,9 +1,4 @@
-import {
-  FetchOptions,
-  QueryResponse,
-  QuestConfig,
-  SomeObject,
-} from "./interfaces";
+import { FetchOptions, QueryResponse, QuestConfig, SomeObject } from "./types";
 
 import { makeRequest } from "./utils";
 
@@ -12,8 +7,8 @@ export async function quest(
   query: string,
   variables: SomeObject = {},
   fetchOptions: FetchOptions = {}
-) {
-  return await makeRequest({
+): Promise<QueryResponse> {
+  return makeRequest({
     endpoint,
     query,
     variables,
@@ -26,7 +21,7 @@ export function QuestClient({ endpoint, method, headers }: QuestConfig) {
     query: string,
     variables: SomeObject = {}
   ): Promise<QueryResponse> => {
-    return await makeRequest({
+    return makeRequest({
       endpoint,
       query,
       variables,

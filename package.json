@@ -1,6 +1,6 @@
 {
   "name": "graphql-quest",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Ultra-minimal library for making GraphQL requests.",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -8,6 +8,7 @@
     "import": "./dist/index.es.js",
     "require": "./dist/index.umd.js"
   },
+  "sideEffects": false,
   "types": "./dist/types.d.ts",
   "author": "Alex MacArthur <alex@macarthur.me> (https://macarthur.me)",
   "homepage": "https://github.com/alexmacarthur/graphql-quest",

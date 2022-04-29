@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "ESNext",
-    "rootDir": "./src",
+    "target": "esnext",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": false,
     "noImplicitThis": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": [
-    "src/**/*"
-  ]
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "types": ["vite/client", "node"],
+    "outDir": "dist",
+  }
 }

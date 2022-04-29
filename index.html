@@ -2,9 +2,8 @@
 <html>
   <head></head>
   <body>
-    <script src="./dist/index.umd.js"></script>
-    <script>
-      const { quest, QuestClient } = Quest;
+    <script type="module">
+      import { quest, QuestClient } from './src/index.ts';
 
       const client = QuestClient({
         endpoint: "http://localhost:4000/graphql",

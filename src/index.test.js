@@ -1,4 +1,4 @@
-import { quest, QuestClient } from "./quest";
+import { quest, QuestClient } from "./index";
 
 const query = `
   {

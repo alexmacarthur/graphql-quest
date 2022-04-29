@@ -1,6 +1,6 @@
 # Quest
 
-A minimal library for making GraphQL requests in JavaScript, coming in at [< 600 bytes gzipped](https://bundlephobia.com/result?p=graphql-quest).
+A minimal library for making GraphQL requests in JavaScript, coming in at [< 700 bytes gzipped](https://bundlephobia.com/result?p=graphql-quest).
 
 ## Why?
 

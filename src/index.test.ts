@@ -1,4 +1,5 @@
 import { quest, QuestClient } from "./index";
+import { vi, describe, it, expect, Mock } from "vitest";
 
 const query = `
   {
@@ -8,20 +9,17 @@ const query = `
   }
 `;
 
-beforeEach(() => {
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
+const getFetchSpy = () => {
+  return vi.spyOn(global, "fetch").mockImplementation(() => {
+    return Promise.resolve({
       json: () => Promise.resolve({ data: {}, errors: [] }),
-    })
-  );
-});
-
-afterEach(() => {
-  global.fetch.mockClear();
-});
+    }) as any;
+  }) as Mock;
+};
 
 describe("quest", () => {
   it("makes request with correct url, headers, and body", async () => {
+    const fetch = getFetchSpy();
     await quest("https://some-domain.com/graphql", query);
     const fetchArgs = fetch.mock.calls[0];
     const fetchOptions = fetchArgs[1];
@@ -34,6 +32,7 @@ describe("quest", () => {
   });
 
   it("passes variables correctly", async () => {
+    const fetch = getFetchSpy();
     const queryWithVariables = `
       query Comments($domain: String!) {
         comments(domain: $domain) {
@@ -61,6 +60,7 @@ describe("quest", () => {
   });
 
   it("makes request with correct url when GET is specified", async () => {
+    const fetch = getFetchSpy();
     await quest(
       "https://some-domain.com/graphql",
       query,
@@ -77,6 +77,7 @@ describe("quest", () => {
   });
 
   it("existing url parameters are preserved", async () => {
+    const fetch = getFetchSpy();
     await quest(
       "https://some-domain.com/graphql?someVar=true",
       query,
@@ -91,6 +92,7 @@ describe("quest", () => {
 
 describe("QuestClient", () => {
   it("makes request based on provided configuration", async () => {
+    const fetch = getFetchSpy();
     const client = QuestClient({
       endpoint: "http://some-domain.com/graphql",
       headers: {
